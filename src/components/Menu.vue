@@ -1,18 +1,17 @@
 <template>
     <div class="container">
-        <input class="input" type="text" placeholder="Action">
-            <div class="box" v-if="isActive">
-                <div class="menu">
-                    <div v-for="template in templates" :key="template.label">
-                        <p class="menu-label">{{ template.label }}</p>
-                        <ul class="menu-list">
-                            <li v-for="action in template.actions" :key="action">
-                                <a>{{ action }}</a>
-                            </li>
-                        </ul>
-                    </div>
+        <div class="box">
+            <div class="menu">
+                <div v-for="template in templates" :key="template.label">
+                    <p class="menu-label">{{ template.label }}</p>
+                    <ul class="menu-list">
+                        <li v-for="action in template.actions" :key="action">
+                            <a>{{ action }}</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </div>
     </div>
 </template>
 
@@ -20,7 +19,6 @@
 export default {
     data() {
         return {
-            isActive: true, // control is focused && 
             templates: {
                 browser: {
                     label: "Browser/GUI",
