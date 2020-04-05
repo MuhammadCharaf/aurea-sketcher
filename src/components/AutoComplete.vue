@@ -11,7 +11,7 @@
             <div class="menu">
                 <ul class="menu-list">
                     <li v-for="item in items" :key="item">
-                        <a class="dropdown-item" @click="select">{{ item }}</a>
+                        <a class="dropdown-item">{{ item }}</a>
                     </li>
                 </ul>
             </div>
@@ -23,7 +23,7 @@
 export default {
     data() {
         return {
-            actions: [
+            dataItems: [
                 'I switch to main window [in "<ui driver instance id>"]',
                 'I <action> "<value>" to "<selector>" value [in "<ui driver instance id>"]',
                 'I set "<selector>" value to "<value>" [in "<ui driver instance id>"]'
@@ -40,7 +40,7 @@ export default {
     methods: {
         filter(event) {
             if (this.text.length !== 0) {
-                let result = [...this.actions].filter(x =>
+                let result = [...this.dataItems].filter(x =>
                     x.toUpperCase().includes(this.text.toUpperCase())
                 );
 
@@ -53,10 +53,6 @@ export default {
             } else {
                 this.isMenuActive = false;
             }
-        },
-        select(event) {
-            this.text = event.srcElement.innerText;
-            this.isMenuActive = false;
         }
     }
 };
