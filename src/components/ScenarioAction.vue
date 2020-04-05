@@ -1,34 +1,28 @@
 <template>
     <div class="container">
-        <table class="table is-hoverable is-fullwidth">
-            <p class="control has-icons-left has-icons-right">
-                <input
-                    class="input is-small is-rounded"
-                    type="text"
-                    v-model="text"
-                    placeholder="Placeholder..."
-                    @input="filter"
-                    @keydown.down="down"
-                    @keydown.up="up"
-                    @keydown.enter="enter"
-                    @keydown.esc="reset"
-                    @keyup.ctrl.13="pushAction" 
-                    @keyup.ctrl.8="removeAction"
-                />
-            </p>
-            <div class="box" v-if="isMenuActive">
-                <div class="menu">
-                    <ul class="menu-list">
-                        <li v-for="item in items" :key="item.description">
-                            <a
-                                :class="{ 'dropdown-item': true, 'is-active': item.isActive }"
-                                @click="select"
-                            >{{ item.description }}</a>
-                        </li>
-                    </ul>
-                </div>
+        <input
+            class="input"
+            type="text"
+            v-model="text"
+            placeholder="Placeholder..."
+            @input="filter"
+            @keydown.down="down"
+            @keydown.up="up"
+            @keydown.enter="enter"
+            @keydown.esc="reset"
+        />
+        <div class="box" v-if="isMenuActive">
+            <div class="menu">
+                <ul class="menu-list">
+                    <li v-for="item in items" :key="item.description">
+                        <a
+                            :class="{ 'dropdown-item': true, 'is-active': item.isActive }"
+                            @click="select"
+                        >{{ item.description }}</a>
+                    </li>
+                </ul>
             </div>
-        </table>
+        </div>
     </div>
 </template>
 
@@ -121,12 +115,6 @@ export default {
             this.activeIndex = 0;
             this.items = [];
             this.isMenuActive = false;
-        },
-        pushAction() {
-            console.log('pushing action');
-        },
-        removeAction() {
-            console.log('removing action');
         }
     }
 };
