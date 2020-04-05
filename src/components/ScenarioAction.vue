@@ -35,10 +35,14 @@ export default {
     },
     props: {
         id: Number,
-        actions: Array
     },
     data() {
         return {
+            actions: [
+                'I switch to main window [in "<ui driver instance id>"]',
+                'I <action> "<value>" to "<selector>" value [in "<ui driver instance id>"]',
+                'I set "<selector>" value to "<value>" [in "<ui driver instance id>"]'
+            ],
             items: [],
             isMenuActive: true,
             text: '',
