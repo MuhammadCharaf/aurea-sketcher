@@ -8,6 +8,8 @@
             @input="filter"
             @keydown.down="down"
             @keydown.up="up"
+            @keydown.enter="enter"
+            @keydown.esc = "reset"
         />
         <div class="box" v-if="isMenuActive">
             <div class="menu">
@@ -62,15 +64,17 @@ export default {
                         });
                     this.refreshItems();
                 } else {
-                    this.isMenuActive = false;
+                    this.reset();
                 }
             } else {
-                this.isMenuActive = false;
+                this.reset();
             }
         },
         select(event) {
-            this.text = event.srcElement.innerText;
-            this.isMenuActive = false;
+            if (this.isMenuActive) {
+                this.text = event.srcElement.innerText;
+                this.reset();
+            }
         },
         down(event) {
             if (this.isMenuActive && this.activeIndex < this.items.length - 1) {
@@ -84,11 +88,22 @@ export default {
                 this.refreshItems();
             }
         },
+        enter(event) {
+            if (this.isMenuActive) {
+                this.text = this.items[this.activeIndex].description;
+                this.reset();
+            }
+        },
         refreshItems() {
             this.items.forEach(item => {
                 item.isActive = false;
             });
             this.items[this.activeIndex].isActive = true;
+        },
+        reset() {
+            this.activeIndex = 0;
+            this.items = [];
+            this.isMenuActive = false;
         }
     }
 };

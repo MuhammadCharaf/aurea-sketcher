@@ -6,12 +6,18 @@
             v-model="text"
             placeholder="Placeholder..."
             @input="filter"
+            @keydown.down="down"
+            @keydown.up="up"
         />
         <div class="box" v-if="isMenuActive">
             <div class="menu">
                 <ul class="menu-list">
-                    <li v-for="item in items" :key="item">
-                        <a class="dropdown-item">{{ item }}</a>
+                    <li v-for="item in items" :key="item.description">
+                        <a 
+                        :class="{ 'dropdown-item': true, 'is-active': item.isActive }" 
+                        @click="select">
+                            {{ item.description }}
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -21,38 +27,68 @@
 
 <script>
 export default {
+    mounted() {
+        this.isMenuActive = false;
+    },
     data() {
         return {
-            dataItems: [
+            actions: [
                 'I switch to main window [in "<ui driver instance id>"]',
                 'I <action> "<value>" to "<selector>" value [in "<ui driver instance id>"]',
                 'I set "<selector>" value to "<value>" [in "<ui driver instance id>"]'
             ],
             items: [
-                'I switch to main window [in "<ui driver instance id>"]',
-                'I <action> "<value>" to "<selector>" value [in "<ui driver instance id>"]',
-                'I set "<selector>" value to "<value>" [in "<ui driver instance id>"]'
+                { description: 'I switch to main window [in "<ui driver instance id>"]', isActive: false},
+                { description: 'I <action> "<value>" to "<selector>" value [in "<ui driver instance id>"]', isActive: false},
+                { description: 'I set "<selector>" value to "<value>" [in "<ui driver instance id>"]', isActive: false},
             ],
             isMenuActive: true,
-            text: ""
+            text: "",
+            activeIndex: 0
         };
     },
     methods: {
         filter(event) {
             if (this.text.length !== 0) {
-                let result = [...this.dataItems].filter(x =>
+                let result = [...this.actions].filter(x =>
                     x.toUpperCase().includes(this.text.toUpperCase())
                 );
 
                 if (result.length !== 0) {
                     this.isMenuActive = true;
-                    this.items = result;
+                    this.activeIndex = 0;
+                    this.items = result.map(x => { 
+                        return { description: x, isActive: false }
+                        });
+                    this.refreshItems();
                 } else {
                     this.isMenuActive = false;
                 }
             } else {
                 this.isMenuActive = false;
             }
+        },
+        select(event) {
+            this.text = event.srcElement.innerText;
+            this.isMenuActive = false;
+        },
+        down(event) {
+            if (this.isMenuActive && this.activeIndex < this.items.length - 1) {
+                this.activeIndex++;
+                this.refreshItems();
+            }
+        },
+        up(event) {
+            if (this.isMenuActive && this.activeIndex > 0) {
+                this.activeIndex--;
+                this.refreshItems();
+            }
+        },
+        refreshItems() {
+            this.items.forEach(item => {
+                item.isActive = false;
+            });
+            this.items[this.activeIndex].isActive = true;
         }
     }
 };
