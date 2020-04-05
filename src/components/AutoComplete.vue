@@ -9,17 +9,16 @@
             @keydown.down="down"
             @keydown.up="up"
             @keydown.enter="enter"
-            @keydown.esc = "reset"
+            @keydown.esc="reset"
         />
         <div class="box" v-if="isMenuActive">
             <div class="menu">
                 <ul class="menu-list">
                     <li v-for="item in items" :key="item.description">
-                        <a 
-                        :class="{ 'dropdown-item': true, 'is-active': item.isActive }" 
-                        @click="select">
-                            {{ item.description }}
-                        </a>
+                        <a
+                            :class="{ 'dropdown-item': true, 'is-active': item.isActive }"
+                            @click="select"
+                        >{{ item.description }}</a>
                     </li>
                 </ul>
             </div>
@@ -40,9 +39,21 @@ export default {
                 'I set "<selector>" value to "<value>" [in "<ui driver instance id>"]'
             ],
             items: [
-                { description: 'I switch to main window [in "<ui driver instance id>"]', isActive: false},
-                { description: 'I <action> "<value>" to "<selector>" value [in "<ui driver instance id>"]', isActive: false},
-                { description: 'I set "<selector>" value to "<value>" [in "<ui driver instance id>"]', isActive: false},
+                {
+                    description:
+                        'I switch to main window [in "<ui driver instance id>"]',
+                    isActive: false
+                },
+                {
+                    description:
+                        'I <action> "<value>" to "<selector>" value [in "<ui driver instance id>"]',
+                    isActive: false
+                },
+                {
+                    description:
+                        'I set "<selector>" value to "<value>" [in "<ui driver instance id>"]',
+                    isActive: false
+                }
             ],
             isMenuActive: true,
             text: "",
@@ -59,9 +70,9 @@ export default {
                 if (result.length !== 0) {
                     this.isMenuActive = true;
                     this.activeIndex = 0;
-                    this.items = result.map(x => { 
-                        return { description: x, isActive: false }
-                        });
+                    this.items = result.map(x => {
+                        return { description: x, isActive: false };
+                    });
                     this.refreshItems();
                 } else {
                     this.reset();
