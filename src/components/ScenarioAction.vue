@@ -1,34 +1,30 @@
 <template>
-    <div class="container">
-        <table class="table is-hoverable is-fullwidth">
-            <p class="control has-icons-left has-icons-right">
-                <input
-                    class="input is-small is-rounded"
-                    type="text"
-                    v-model="text"
-                    placeholder="Placeholder..."
-                    @input="filter"
-                    @keydown.down="down"
-                    @keydown.up="up"
-                    @keydown.enter="enter"
-                    @keydown.esc="reset"
-                    @keyup.ctrl.13="pushAction"
-                    @keyup.ctrl.8="removeAction"
-                />
-            </p>
-            <div class="box" v-if="isMenuActive">
-                <div class="menu">
-                    <ul class="menu-list">
-                        <li v-for="item in items" :key="item.description">
-                            <a
-                                :class="{ 'dropdown-item': true, 'is-active': item.isActive }"
-                                @click="select"
-                            >{{ item.description }}</a>
-                        </li>
-                    </ul>
-                </div>
+    <div>
+        <input
+            class="input is-small is-rounded"
+            type="text"
+            v-model="text"
+            placeholder="When I ..."
+            @input="filter"
+            @keydown.down="down"
+            @keydown.up="up"
+            @keydown.enter="enter"
+            @keydown.esc="reset"
+            @keyup.ctrl.13="addAction"
+            @keyup.ctrl.8="removeAction"
+        />
+        <div class="box" v-if="isMenuActive">
+            <div class="menu">
+                <ul class="menu-list">
+                    <li v-for="item in items" :key="item.description">
+                        <a
+                            :class="{ 'dropdown-item': true, 'is-active': item.isActive }"
+                            @click="select"
+                        >{{ item.description }}</a>
+                    </li>
+                </ul>
             </div>
-        </table>
+        </div>
     </div>
 </template>
 
@@ -37,32 +33,15 @@ export default {
     mounted() {
         this.isMenuActive = false;
     },
+    props: {
+        id: Number,
+        actions: Array
+    },
     data() {
         return {
-            actions: [
-                'I switch to main window [in "<ui driver instance id>"]',
-                'I <action> "<value>" to "<selector>" value [in "<ui driver instance id>"]',
-                'I set "<selector>" value to "<value>" [in "<ui driver instance id>"]'
-            ],
-            items: [
-                {
-                    description:
-                        'I switch to main window [in "<ui driver instance id>"]',
-                    isActive: false
-                },
-                {
-                    description:
-                        'I <action> "<value>" to "<selector>" value [in "<ui driver instance id>"]',
-                    isActive: false
-                },
-                {
-                    description:
-                        'I set "<selector>" value to "<value>" [in "<ui driver instance id>"]',
-                    isActive: false
-                }
-            ],
+            items: [],
             isMenuActive: true,
-            text: "",
+            text: '',
             activeIndex: 0
         };
     },
@@ -122,11 +101,11 @@ export default {
             this.items = [];
             this.isMenuActive = false;
         },
-        pushAction() {
-            console.log('pushing action');
+        addAction() {
+            this.$emit('add-action');
         },
         removeAction() {
-            console.log('removing action');
+            this.$emit('remove-action');
         }
     }
 };
