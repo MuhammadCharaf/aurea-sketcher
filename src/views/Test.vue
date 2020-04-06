@@ -1,27 +1,28 @@
 <template>
     <div class="container">
         <table class="table is-hoverable is-fullwidth">
-            <scenario-action 
-            @add-action="onAddAction" 
-            @remove-action="onRemoveAction"/>
+            <div class="field" v-for="action in actions" :key="action.id">
+                <scenario-action 
+                @add-action="onAddAction" 
+                @remove-action="onRemoveAction"/>
+            </div>
         </table>
     </div>
 </template>
 
 <script>
 import ScenarioAction from '../components/ScenarioAction.vue'
+import ScenarioActionData from '../data/scenarioActionData.js'
 
 export default {
     mounted() {
-        this.scenarioActions.push({
-            id: 1,
-            action: ''
-        })
+        this.actions.push(new ScenarioActionData());
+        this.actions.push(new ScenarioActionData());
     },
     components: { ScenarioAction },
     data() {
         return {
-            scenarioActions: []
+            actions: []
         };
     },
     methods: {
