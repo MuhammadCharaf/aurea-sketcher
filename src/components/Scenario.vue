@@ -3,6 +3,7 @@
         <table class="table is-hoverable is-fullwidth">
             <div class="field" v-for="(item, cid) in actionItems" :key="cid">
                 <scenario-action 
+                :action="item"
                 :cid="cid"
                 @add-action="onAddAction" 
                 @remove-action="onRemoveAction"
