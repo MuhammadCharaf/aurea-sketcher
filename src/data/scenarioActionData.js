@@ -6,11 +6,9 @@ class ScenarioActionData {
      * Constructor
      */
     constructor() {
-        this.id = Date.now().toString();
+        this.id = null;
         this.number = null;
         this.action = null;
-
-        console.log(this.id)
     }
 
     /**
@@ -22,6 +20,13 @@ class ScenarioActionData {
     }
 
     /**
+     * @returns {String} action
+     */
+    getAction() {
+        return this.action;
+    }
+
+    /**
      * Sets number property.
      * @param {Number} number 
      */
@@ -30,7 +35,22 @@ class ScenarioActionData {
     }
 
     /**
-     * @returns {Number} id
+     * @returns {Number} number
+     */
+    getNumber() {
+        return this.number;
+    }
+
+    /**
+     * Sets id property
+     * @param {String} id 
+     */
+    setId(id) {
+        this.id = id;
+    }
+
+    /**
+     * @returns {String} id
      */
     getId() {
         return this.id;

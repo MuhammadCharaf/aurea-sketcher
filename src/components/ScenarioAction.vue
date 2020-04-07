@@ -12,6 +12,7 @@
             @keydown.esc="reset"
             @keyup.ctrl.13="addAction"
             @keyup.ctrl.8="removeAction"
+            @focus="focus"
         />
         <div class="box" v-if="isMenuActive">
             <div class="menu">
@@ -30,35 +31,35 @@
 
 <script>
 export default {
-    mounted() {
-        this.isMenuActive = false;
-    },
     props: {
-        id: Number,
+        cid: String,
     },
     data() {
         return {
-            actions: [
+            // Data properties
+            _actions: [
                 'I switch to main window [in "<ui driver instance id>"]',
                 'I <action> "<value>" to "<selector>" value [in "<ui driver instance id>"]',
                 'I set "<selector>" value to "<value>" [in "<ui driver instance id>"]'
             ],
+            _activeIndex: 0,
+
+            // Component properties
             items: [],
-            isMenuActive: true,
+            isMenuActive: false,
             text: '',
-            activeIndex: 0
         };
     },
     methods: {
         filter(event) {
             if (this.text.length !== 0) {
-                let result = [...this.actions].filter(x =>
+                let result = [...this._actions].filter(x =>
                     x.toUpperCase().includes(this.text.toUpperCase())
                 );
 
                 if (result.length !== 0) {
                     this.isMenuActive = true;
-                    this.activeIndex = 0;
+                    this._activeIndex = 0;
                     this.items = result.map(x => {
                         return { description: x, isActive: false };
                     });
@@ -77,8 +78,8 @@ export default {
             }
         },
         down(event) {
-            if (this.isMenuActive && this.activeIndex < this.items.length - 1) {
-                this.activeIndex++;
+            if (this.isMenuActive && this._activeIndex < this.items.length - 1) {
+                this._activeIndex++;
                 this.refreshItems();
             }
         },
@@ -110,6 +111,9 @@ export default {
         },
         removeAction() {
             this.$emit('remove-action');
+        },
+        focus(event) {
+            this.$emit('focus-action', this.cid);
         }
     }
 };
