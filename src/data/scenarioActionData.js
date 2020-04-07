@@ -8,22 +8,22 @@ class ScenarioActionData {
     constructor() {
         this.id = null;
         this.number = null;
-        this.action = null;
+        this.description = null;
     }
 
     /**
-     * Sets action property.
-     * @param {String} action 
+     * Sets description property.
+     * @param {String} description 
      */
-    setAction(action) {
-        this.action = action;
+    setAction(description) {
+        this.description = description;
     }
 
     /**
-     * @returns {String} action
+     * @returns {String} description
      */
     getAction() {
-        return this.action;
+        return this.description;
     }
 
     /**

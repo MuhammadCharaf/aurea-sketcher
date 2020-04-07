@@ -3,7 +3,7 @@
         <input
             class="input is-small is-rounded"
             type="text"
-            v-model="text"
+            v-model="action.description"
             placeholder="When I ..."
             @input="filter"
             @keydown.down="down"
@@ -30,19 +30,21 @@
 </template>
 
 <script>
+import ScenarioActionData from '../data/scenarioActionData';
+
 export default {
     props: {
         cid: String,
+        action: ScenarioActionData
     },
     data() {
         return {
-            // Data properties
-            _actions: [
+            actions: [
                 'I switch to main window [in "<ui driver instance id>"]',
                 'I <action> "<value>" to "<selector>" value [in "<ui driver instance id>"]',
                 'I set "<selector>" value to "<value>" [in "<ui driver instance id>"]'
             ],
-            _activeIndex: 0,
+            activeIndex: 0,
 
             // Component properties
             items: [],
@@ -52,14 +54,14 @@ export default {
     },
     methods: {
         filter(event) {
-            if (this.text.length !== 0) {
-                let result = [...this._actions].filter(x =>
-                    x.toUpperCase().includes(this.text.toUpperCase())
+            if (this.action.description.length !== 0) {
+                let result = [...this.actions].filter(x =>
+                    x.toUpperCase().includes(this.action.description.toUpperCase())
                 );
 
                 if (result.length !== 0) {
                     this.isMenuActive = true;
-                    this._activeIndex = 0;
+                    this.activeIndex = 0;
                     this.items = result.map(x => {
                         return { description: x, isActive: false };
                     });
@@ -73,13 +75,13 @@ export default {
         },
         select(event) {
             if (this.isMenuActive) {
-                this.text = event.srcElement.innerText;
+                this.action.description = event.srcElement.innerText;
                 this.reset();
             }
         },
         down(event) {
-            if (this.isMenuActive && this._activeIndex < this.items.length - 1) {
-                this._activeIndex++;
+            if (this.isMenuActive && this.activeIndex < this.items.length - 1) {
+                this.activeIndex++;
                 this.refreshItems();
             }
         },
@@ -91,7 +93,7 @@ export default {
         },
         enter(event) {
             if (this.isMenuActive) {
-                this.text = this.items[this.activeIndex].description;
+                this.action.description = this.items[this.activeIndex].description;
                 this.reset();
             }
         },
