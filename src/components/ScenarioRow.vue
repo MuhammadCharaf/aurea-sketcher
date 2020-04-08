@@ -30,12 +30,12 @@
 </template>
 
 <script>
-import ScenarioActionData from '../data/scenarioActionData';
+import Action from '../data/action';
 
 export default {
     props: {
         cid: String,
-        action: ScenarioActionData
+        action: Action
     },
     data() {
         return {

@@ -17,7 +17,7 @@
 
 <script>
 import ScenarioRow from '../components/ScenarioRow.vue'
-import ScenarioActionData from '../data/scenarioActionData.js'
+import Action from '../data/action.js'
 
 export default {
     created() {
@@ -53,7 +53,7 @@ export default {
         },
         addActionItem() {
             let cId = Date.now().toString();
-            let action = new ScenarioActionData();
+            let action = new Action();
 
             action.setId(cId);
             action.setNumber(Object.keys(action).length);
