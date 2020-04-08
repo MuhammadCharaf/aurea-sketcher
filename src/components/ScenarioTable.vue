@@ -1,27 +1,29 @@
 <template>
-    <div class="container">
-        <table class="table is-hoverable is-fullwidth">
-            <div class="field" v-for="(item, cid) in actionItems" :key="cid">
-                <scenario-action 
-                :action="item"
-                :cid="cid"
-                @add-action="onAddAction" 
-                @remove-action="onRemoveAction"
-                @focus-action="onFocus"/>
-            </div>
-        </table>
+    <div class="section">
+        <div class="container">
+            <table class="table is-hoverable is-fullwidth">
+                <div class="field" v-for="(item, cid) in actionItems" :key="cid">
+                    <scenario-row 
+                    :action="item"
+                    :cid="cid"
+                    @add-action="onAddAction" 
+                    @remove-action="onRemoveAction"
+                    @focus-action="onFocus"/>
+                </div>
+            </table>
+        </div>
     </div>
 </template>
 
 <script>
-import ScenarioAction from '../components/ScenarioAction.vue'
+import ScenarioRow from '../components/ScenarioRow.vue'
 import ScenarioActionData from '../data/scenarioActionData.js'
 
 export default {
     created() {
         this.addActionItem();
     },
-    components: { ScenarioAction },
+    components: { ScenarioRow },
     data() {
         return {
             actionItems: {},
