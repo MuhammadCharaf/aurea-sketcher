@@ -6,10 +6,10 @@ class Action {
      * Constructor
      */
     constructor() {
-        this.id = null;
+        this.id = '';
         this.number = 0;
-        this.propnoun = null;
-        this.description = null;
+        this.propnoun = '';
+        this.description = '';
     }
 
     /**
@@ -49,7 +49,6 @@ class Action {
     setPronoun(propnoun) {
         this.propnoun = propnoun;
     }
-
 
     /**
      * @returns pronoun

@@ -2,7 +2,7 @@
     <div>
         <div class="field is-horizontal">
             <div class="field-label is-small">
-                <label class="label">{{ action.pronoun }}</label>
+                <label class="label">{{ action.getPronoun() }}</label>
             </div>
             <div class="field-body">
                 <div class="field">

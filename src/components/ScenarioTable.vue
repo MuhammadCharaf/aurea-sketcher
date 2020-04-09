@@ -28,7 +28,6 @@ export default {
         return {
             actionItems: {},
             selectedActionItem: null,
-            renderingKey: 0
         };
     },
     methods: {
