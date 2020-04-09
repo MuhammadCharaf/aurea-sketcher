@@ -3,7 +3,7 @@
         <div class="container">
             <div class="menu">
                 <div class="field is-horizontal menu-label">
-                    <div class="field-label is-small">
+                    <div class="field-label is-normal">
                         <label class="label">Scenario</label>
                     </div>
                     <div class="field-body">
@@ -18,17 +18,15 @@
                         </div>
                     </div>
                 </div>
-                <ul class="menu-list" v-for="(item, cid) in actionItems" :key="cid">
-                    <li>
-                        <scenario-row
-                            :action="item"
-                            :cid="cid"
-                            @add-action="onAddAction"
-                            @remove-action="onRemoveAction"
-                            @focus-action="onFocus"
-                        />
-                    </li>
-                </ul>
+                <div class="menu-list" v-for="(item, cid) in actionItems" :key="cid">
+                    <scenario-row
+                        :action="item"
+                        :cid="cid"
+                        @add-action="onAddAction"
+                        @remove-action="onRemoveAction"
+                        @focus-action="onFocus"
+                    />
+                </div>
             </div>
         </div>
     </div>

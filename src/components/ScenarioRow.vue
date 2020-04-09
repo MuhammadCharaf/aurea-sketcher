@@ -11,7 +11,7 @@
                             class="input is-small is-rounded"
                             type="text"
                             v-model="action.description"
-                            placeholder="When I ..."
+                            placeholder="Scenario Action"
                             @input="filter"
                             @keydown.down="down"
                             @keydown.up="up"
