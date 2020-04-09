@@ -1,19 +1,30 @@
 <template>
     <div>
-        <input
-            class="input is-small is-rounded"
-            type="text"
-            v-model="action.description"
-            placeholder="When I ..."
-            @input="filter"
-            @keydown.down="down"
-            @keydown.up="up"
-            @keydown.enter="enter"
-            @keydown.esc="reset"
-            @keyup.ctrl.13="addAction"
-            @keyup.ctrl.8="removeAction"
-            @focus="focus"
-        />
+        <div class="field is-horizontal">
+            <div class="field-label is-small">
+                <label class="label">{{ action.pronoun }}</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <p class="control">
+                        <input
+                            class="input is-small is-rounded"
+                            type="text"
+                            v-model="action.description"
+                            placeholder="When I ..."
+                            @input="filter"
+                            @keydown.down="down"
+                            @keydown.up="up"
+                            @keydown.enter="enter"
+                            @keydown.esc="reset"
+                            @keyup.ctrl.13="addAction"
+                            @keyup.ctrl.8="removeAction"
+                            @focus="focus"
+                        />
+                    </p>
+                </div>
+            </div>
+        </div>
         <div class="box" v-if="isMenuActive">
             <div class="menu">
                 <ul class="menu-list">
@@ -30,7 +41,7 @@
 </template>
 
 <script>
-import Action from '../data/action';
+import Action from "../data/action";
 
 export default {
     props: {
@@ -49,14 +60,17 @@ export default {
             // Component properties
             items: [],
             isMenuActive: false,
-            text: '',
+            text: "",
+            label: "When"
         };
     },
     methods: {
         filter(event) {
             if (this.action.description.length !== 0) {
                 let result = [...this.actions].filter(x =>
-                    x.toUpperCase().includes(this.action.description.toUpperCase())
+                    x
+                        .toUpperCase()
+                        .includes(this.action.description.toUpperCase())
                 );
 
                 if (result.length !== 0) {
@@ -93,7 +107,9 @@ export default {
         },
         enter(event) {
             if (this.isMenuActive) {
-                this.action.description = this.items[this.activeIndex].description;
+                this.action.description = this.items[
+                    this.activeIndex
+                ].description;
                 this.reset();
             }
         },
@@ -109,13 +125,13 @@ export default {
             this.isMenuActive = false;
         },
         addAction() {
-            this.$emit('add-action');
+            this.$emit("add-action");
         },
         removeAction() {
-            this.$emit('remove-action');
+            this.$emit("remove-action");
         },
         focus(event) {
-            this.$emit('focus-action', this.cid);
+            this.$emit("focus-action", this.cid);
         }
     }
 };

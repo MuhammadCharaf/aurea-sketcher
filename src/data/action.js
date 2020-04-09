@@ -7,23 +7,24 @@ class Action {
      */
     constructor() {
         this.id = null;
-        this.number = null;
+        this.number = 0;
+        this.propnoun = null;
         this.description = null;
     }
 
     /**
-     * Sets description property.
-     * @param {String} description 
+     * Sets id property
+     * @param {String} id 
      */
-    setAction(description) {
-        this.description = description;
+    setId(id) {
+        this.id = id;
     }
 
     /**
-     * @returns {String} description
+     * @returns {String} id
      */
-    getAction() {
-        return this.description;
+    getId() {
+        return this.id;
     }
 
     /**
@@ -42,18 +43,34 @@ class Action {
     }
 
     /**
-     * Sets id property
-     * @param {String} id 
+     * Sets pronoun property
+     * @param {String} propnoun 
      */
-    setId(id) {
-        this.id = id;
+    setPronoun(propnoun) {
+        this.propnoun = propnoun;
+    }
+
+
+    /**
+     * @returns pronoun
+     */
+    getPronoun() {
+        return this.propnoun;
     }
 
     /**
-     * @returns {String} id
+     * Sets description property.
+     * @param {String} description 
      */
-    getId() {
-        return this.id;
+    setDescription(description) {
+        this.description = description;
+    }
+
+    /**
+     * @returns {String} description
+     */
+    getDescription() {
+        return this.description;
     }
 }
 

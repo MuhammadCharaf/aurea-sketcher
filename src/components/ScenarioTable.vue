@@ -17,7 +17,7 @@
 
 <script>
 import ScenarioRow from '../components/ScenarioRow.vue'
-import ScenarioActionData from '../data/scenarioActionData.js'
+import Action from '../data/action.js'
 
 export default {
     created() {
@@ -53,10 +53,11 @@ export default {
         },
         addActionItem() {
             let cId = Date.now().toString();
-            let action = new ScenarioActionData();
 
-            action.setId(cId);
-            action.setNumber(Object.keys(action).length);
+            let action = new Action();
+            action.id = cId;
+            action.number = Object.keys(this.actionItems).length + 1;
+            action.pronoun = action.number > 1 ? "And" : "When";
 
             this.actionItems[cId] = action;
             this.$forceUpdate();
