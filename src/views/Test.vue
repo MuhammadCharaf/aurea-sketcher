@@ -1,23 +1,42 @@
 <template>
     <div class="section">
         <div class="container">
-            <table class="table is-hoverable is-fullwidth">
-                <div class="field" v-for="(item, cid) in actionItems" :key="cid">
-                    <scenario-row 
-                    :action="item"
-                    :cid="cid"
-                    @add-action="onAddAction" 
-                    @remove-action="onRemoveAction"
-                    @focus-action="onFocus"/>
+            <div class="menu">
+                <div class="field is-horizontal menu-label">
+                    <div class="field-label is-small">
+                        <label class="label">Scenario</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input
+                                    class="input is-small is-rounded"
+                                    type="text"
+                                    placeholder="Scenario Title"
+                                />
+                            </p>
+                        </div>
+                    </div>
                 </div>
-            </table>
+                <ul class="menu-list" v-for="(item, cid) in actionItems" :key="cid">
+                    <li>
+                        <scenario-row
+                            :action="item"
+                            :cid="cid"
+                            @add-action="onAddAction"
+                            @remove-action="onRemoveAction"
+                            @focus-action="onFocus"
+                        />
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import ScenarioRow from '../components/ScenarioRow.vue'
-import Action from '../data/action.js'
+import ScenarioRow from "../components/ScenarioRow.vue";
+import Action from "../data/action.js";
 
 export default {
     created() {
@@ -37,7 +56,10 @@ export default {
             this.$forceUpdate();
         },
         onRemoveAction() {
-            if (this.selectedActionItem && Object.keys(this.actionItems).length > 0) {
+            if (
+                this.selectedActionItem &&
+                Object.keys(this.actionItems).length > 0
+            ) {
                 let cId = this.selectedActionItem.getId();
 
                 delete this.actionItems[cId];
@@ -61,7 +83,7 @@ export default {
 
             this.actionItems[cId] = action;
             this.$forceUpdate();
-        },
+        }
     }
 };
 </script>
