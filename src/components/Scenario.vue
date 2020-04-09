@@ -18,10 +18,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="menu-list" v-for="(item, cid) in actionItems" :key="cid">
+                <div class="menu-list" v-for="(item, id) in scenario.actions()" :key="id">
                     <scenario-row
                         :action="item"
-                        :cid="cid"
+                        :cid="id"
                         @add-action="onAddAction"
                         @remove-action="onRemoveAction"
                         @focus-action="onFocus"
@@ -35,6 +35,7 @@
 <script>
 import ScenarioRow from "../components/ScenarioRow.vue";
 import Action from "../data/action.js";
+import Scenario from "../data/scenario.js";
 
 export default {
     created() {
@@ -45,6 +46,7 @@ export default {
         return {
             actionItems: {},
             selectedActionItem: null,
+            scenario: new Scenario()
         };
     },
     methods: {
@@ -54,31 +56,38 @@ export default {
         },
         onRemoveAction() {
             if (
-                this.selectedActionItem &&
-                Object.keys(this.actionItems).length > 0
-            ) {
-                let cId = this.selectedActionItem.getId();
+                !this.selectedActionItem ||
+                !this.scenario.anyAction() ||
+                this.selectedActionItem === this.scenario.firstAction()
+            )
+                return;
 
-                delete this.actionItems[cId];
-                this.selectedActionItem = null;
+            let id = this.selectedActionItem.getId();
+            this.scenario.removeAction(id);
+            this.selectedActionItem = null;
 
-                this.$forceUpdate();
+            if (this.scenario.anyAction()) {
+                this.scenario.firstAction().setPronoun("When");
             }
+
+            console.log(this.scenario.actions());
+            this.$forceUpdate();
         },
-        onFocus(cid) {
-            if (this.actionItems.hasOwnProperty(cid)) {
-                this.selectedActionItem = this.actionItems[cid];
-            }
+        onFocus(id) {
+            if (!this.scenario.hasAction(id)) return;
+
+            this.selectedActionItem = this.scenario.action(id);
         },
         addActionItem() {
-            let cId = Date.now().toString();
+            let id = Date.now().toString();
+            let number = this.scenario.countActions() + 1;
 
             let action = new Action();
-            action.id = cId;
-            action.number = Object.keys(this.actionItems).length + 1;
-            action.pronoun = action.number > 1 ? "And" : "When";
+            action.setId(id);
+            action.setNumber(number);
+            action.setPronoun(action.number > 1 ? "And" : "When");
 
-            this.actionItems[cId] = action;
+            this.scenario.addAction(id, action);
             this.$forceUpdate();
         }
     }
