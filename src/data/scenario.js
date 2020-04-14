@@ -82,6 +82,10 @@ class Scenario {
         return this._actions;
     }
 
+    results() {
+        return this._results;
+    }
+
     firstAction() {
         if (!this.anyAction())
             return null;

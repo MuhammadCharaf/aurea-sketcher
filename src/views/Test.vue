@@ -2,23 +2,7 @@
     <div class="section">
         <div class="container">
             <div class="menu">
-                <div class="field is-horizontal menu-label">
-                    <div class="field-label is-normal">
-                        <label class="label">Scenario:</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                            <p class="control">
-                                <input
-                                    class="input is-small is-rounded"
-                                    type="text"
-                                    placeholder="Scenario Title"
-                                    v-model="scenario.title"
-                                />
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <scenario-title :scenario="scenario"/>
                 <div class="menu-list" v-for="(item, id) in scenario.actions()" :key="id">
                     <scenario-row
                         :action="item"
@@ -27,6 +11,11 @@
                         @remove-action="onRemoveAction"
                         @focus-action="onFocus"
                     />
+                <!-- <div class="menu-list" v-for="(item, id) in scenario.results()" :key="id">
+                    <scenario-row
+                        :action="item"
+                        :cid="id"
+                    /> -->
                 </div>
             </div>
         </div>
@@ -35,6 +24,7 @@
 
 <script>
 import ScenarioRow from "../components/ScenarioRow.vue";
+import ScenarioTitle from "../components/ScenarioTitle";
 import Action from "../data/action.js";
 import Scenario from "../data/scenario.js";
 
@@ -42,10 +32,9 @@ export default {
     created() {
         this.addActionItem();
     },
-    components: { ScenarioRow },
+    components: { ScenarioRow, ScenarioTitle },
     data() {
         return {
-            actionItems: {},
             selectedActionItem: null,
             scenario: new Scenario()
         };
@@ -90,6 +79,15 @@ export default {
 
             this.scenario.addAction(id, action);
             this.$forceUpdate();
+        },
+        onAddResult(event) {
+
+        },
+        onRemoveResult(event) {
+
+        },
+        onFocusResult() {
+
         }
     }
 };
