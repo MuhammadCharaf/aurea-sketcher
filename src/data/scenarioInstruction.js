@@ -1,7 +1,7 @@
 /**
  * Represents Scenario Action data model.
  */
-class Action {
+class ScenarioInstruction {
   /**
      * Constructor
      */
@@ -45,4 +45,4 @@ class Action {
   }
 }
 
-export default Action;
+export default ScenarioInstruction;

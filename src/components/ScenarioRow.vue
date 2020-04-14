@@ -47,12 +47,12 @@
 </template>
 
 <script>
-import Action from '../data/action';
+import ScenarioInstruction from '../data/scenarioInstruction';
 
 export default {
   props: {
     uniqueId: { type: String, default: '' },
-    viewModel: Action,
+    viewModel: ScenarioInstruction,
   },
   data() {
     return {
