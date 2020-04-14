@@ -134,7 +134,7 @@ export default {
       this.$emit('sr-remove');
     },
     onFocus() {
-      this.$emit('sr-focus', this.cid);
+      this.$emit('sr-focus', this.uniqueId);
     },
   },
 };
