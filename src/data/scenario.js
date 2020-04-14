@@ -2,103 +2,85 @@
  * Represents scenario component
  */
 class Scenario {
-    constructor() {
-        this._title = '';
-        this._actions = {};
-        this._results = {};
+  constructor() {
+    this.title = '';
+    this.actionsMap = new Map();
+    this.resultsMap = new Map();
+  }
+
+  setTitle(title) {
+    this.title = title;
+  }
+
+  actions() {
+    return [...this.actionsMap.values()];
+  }
+
+  addAction(id, action) {
+    this.actionsMap.set(id, action);
+  }
+
+  action(id) {
+    return this.hasAction(id) ? this.actionsMap.get(id) : null;
+  }
+
+  hasAction(id) {
+    return this.actionsMap.has(id);
+  }
+
+  anyAction() {
+    return this.actionsMap.length > 0;
+  }
+
+  firstAction() {
+    if (!this.anyAction()) {
+      return null;
     }
 
-    setTitle(title) {
-        this._title = title;
-    }
+    return this.actionsMap.values().next().value;
+  }
 
-    getTitle() { 
-        return this.title; 
-    }
+  removeAction(id) {
+    return this.actionsMap.delete(id);
+  }
 
-    addAction(id, action) {
-        this._actions[id] = action;
-    }
+  countActions() {
+    return this.actionsMap.length;
+  }
 
-    action(id) {
-        if (this._actions.hasOwnProperty(id)) 
-            return this._actions[id];
+  addResult(id, result) {
+    this.resultsMap.set(id, result);
+  }
 
-        return null;
-    }
+  result(id) {
+    return this.resultsMap.get(id);
+  }
 
-    addResult(id, result) {
-        this._results[id] = result;
-    }
+  hasResult(id) {
+    return this.resultsMap.has(id);
+  }
 
-    result(id) {
-        if (this._results.hasOwnProperty(id)) 
-            return this._results[id];
+  anyResult() {
+    return this.resultsMap.length > 0;
+  }
 
-        return null;
-    }
+  removeResult(id) {
+    return this.resultsMap.delete(id);
+  }
 
-    hasAction(id) {
-        return this._actions.hasOwnProperty(id);
-    }
+  countResults() {
+    return this.resultsMap.length;
+  }
 
-    hasResult(id) {
-        return this._results.hasOwnProperty(id);
-    }
+  getResults() {
+    return this.resultsMap;
+  }
 
-    anyAction() {
-        return Object.keys(this._actions).length > 0
-    }
+  firstResult() {
+    if (!this.anyResult()) { return null; }
 
-    anyResult() {
-        return Object.keys(this._results).length > 0
-    }
-
-    removeAction(id) {
-        if (!this.hasAction(id)) 
-            return false;
-        
-        delete this._actions[id];
-        return true;
-    }
-
-    removeResult(id) {
-        if (!this.hasResult(id))
-            return false;
-
-        delete this._results[id];
-        return true;
-    }
-
-    countActions() {
-        return Object.keys(this._actions).length;
-    }
-
-    countResults() {
-        return Object.keys(this._results).length;
-    }
-
-    actions() {
-        return this._actions;
-    }
-
-    results() {
-        return this._results;
-    }
-
-    firstAction() {
-        if (!this.anyAction())
-            return null;
-
-        return this._actions[Object.keys(this._actions)[0]];
-    }
-
-    firstResult() {
-        if (!this.anyResult())
-            return null;
-
-        return this._results[Object.keys(this._results)[0]];
-    }
+    return this.resultsMap.values().next().value;
+  }
 }
 
 export default Scenario;
