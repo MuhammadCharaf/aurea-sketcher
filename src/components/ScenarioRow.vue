@@ -2,24 +2,24 @@
   <div>
     <div class="field is-horizontal">
       <div class="field-label is-small">
-        <label class="label">{{ action.getPronoun() }}</label>
+        <label class="label">{{ viewModel.getPronoun() }}</label>
       </div>
       <div class="field-body">
         <div class="field">
           <p class="control">
             <input
-              v-model="action.description"
+              v-model="viewModel.description"
               class="input is-small is-rounded"
               type="text"
               placeholder="Scenario Action"
-              @input="filter"
-              @keydown.down="down"
-              @keydown.up="up"
-              @keydown.enter="enter"
+              @input="onInput"
+              @keydown.down="onKeydownDown"
+              @keydown.up="onKeydownUp"
+              @keydown.enter="onKeydownEnter"
               @keydown.esc="reset"
-              @keyup.ctrl.13="addAction"
-              @keyup.ctrl.8="removeAction"
-              @focus="focus"
+              @keyup.ctrl.13="onKeyupCtrlEnter"
+              @keyup.ctrl.8="onKeyupCtrlDelete"
+              @focus="onFocus"
             >
           </p>
         </div>
@@ -51,8 +51,8 @@ import Action from '../data/action';
 
 export default {
   props: {
-    cid: { type: String, default: '' },
-    action: Action,
+    uniqueId: { type: String, default: '' },
+    viewModel: Action,
   },
   data() {
     return {
@@ -71,11 +71,11 @@ export default {
     };
   },
   methods: {
-    filter() {
-      if (this.action.description.length !== 0) {
-        const result = [...this.actions].filter((x) => x
+    onInput() {
+      if (this.viewModel.description.length !== 0) {
+        const result = [...this.viewModels].filter((x) => x
           .toUpperCase()
-          .includes(this.action.description.toUpperCase()));
+          .includes(this.viewModel.description.toUpperCase()));
 
         if (result.length !== 0) {
           this.isMenuActive = true;
@@ -91,25 +91,25 @@ export default {
     },
     select(event) {
       if (this.isMenuActive) {
-        this.action.description = event.srcElement.innerText;
+        this.viewModel.description = event.srcElement.innerText;
         this.reset();
       }
     },
-    down() {
+    onKeydownDown() {
       if (this.isMenuActive && this.activeIndex < this.items.length - 1) {
         this.activeIndex += 1;
         this.refreshItems();
       }
     },
-    up() {
+    onKeydownUp() {
       if (this.isMenuActive && this.activeIndex > 0) {
         this.activeIndex -= 1;
         this.refreshItems();
       }
     },
-    enter() {
+    onKeydownEnter() {
       if (this.isMenuActive) {
-        this.action.description = this.items[
+        this.viewModel.description = this.items[
           this.activeIndex
         ].description;
         this.reset();
@@ -127,14 +127,14 @@ export default {
       this.items = [];
       this.isMenuActive = false;
     },
-    addAction() {
-      this.$emit('add-action');
+    onKeyupCtrlEnter() {
+      this.$emit('sr-add');
     },
-    removeAction() {
-      this.$emit('remove-action');
+    onKeyupCtrlDelete() {
+      this.$emit('sr-remove');
     },
-    focus() {
-      this.$emit('focus-action', this.cid);
+    onFocus() {
+      this.$emit('sr-focus', this.cid);
     },
   },
 };

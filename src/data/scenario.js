@@ -4,82 +4,47 @@
 class Scenario {
   constructor() {
     this.title = '';
-    this.actionsMap = new Map();
-    this.resultsMap = new Map();
+    this.rowsMap = new Map();
   }
 
   setTitle(title) {
     this.title = title;
   }
 
-  actions() {
-    return [...this.actionsMap.values()];
+  rows() {
+    return [...this.rowsMap.values()];
   }
 
-  addAction(id, action) {
-    this.actionsMap.set(id, action);
+  add(id, obj) {
+    this.rowsMap.set(id, obj);
   }
 
-  action(id) {
-    return this.hasAction(id) ? this.actionsMap.get(id) : null;
+  remove(id) {
+    return this.rowsMap.delete(id);
   }
 
-  hasAction(id) {
-    return this.actionsMap.has(id);
+  get(id) {
+    return this.has(id) ? this.rowsMap.get(id) : null;
   }
 
-  anyAction() {
-    return this.actionsMap.length > 0;
+  has(id) {
+    return this.rowsMap.has(id);
   }
 
-  firstAction() {
-    if (!this.anyAction()) {
+  any() {
+    return this.rowsMap.size > 0;
+  }
+
+  first() {
+    if (!this.any()) {
       return null;
     }
 
-    return this.actionsMap.values().next().value;
+    return this.rowsMap.values().next().value;
   }
 
-  removeAction(id) {
-    return this.actionsMap.delete(id);
-  }
-
-  countActions() {
-    return this.actionsMap.length;
-  }
-
-  addResult(id, result) {
-    this.resultsMap.set(id, result);
-  }
-
-  result(id) {
-    return this.resultsMap.get(id);
-  }
-
-  hasResult(id) {
-    return this.resultsMap.has(id);
-  }
-
-  anyResult() {
-    return this.resultsMap.length > 0;
-  }
-
-  removeResult(id) {
-    return this.resultsMap.delete(id);
-  }
-
-  countResults() {
-    return this.resultsMap.length;
-  }
-
-  getResults() {
-    return this.resultsMap;
-  }
-
-  firstResult() {
-    if (!this.anyResult()) { return null; }
-
-    return this.resultsMap.values().next().value;
+  size() {
+    return this.rowsMap.size;
   }
 }
 

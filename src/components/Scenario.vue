@@ -4,22 +4,17 @@
       <div class="menu">
         <scenario-title :scenario="scenario" />
         <div
-          v-for="item in scenario.actions()"
+          v-for="item in scenario.rows()"
           :key="item.id"
           class="menu-list"
         >
           <scenario-row
-            :action="item"
-            :cid="item.id"
-            @add-action="onAddAction"
-            @remove-action="onRemoveAction"
-            @focus-action="onFocus"
+            :view-model="item"
+            :unique-id="item.id"
+            @sr-add="onAdd"
+            @sr-remove="onRemove"
+            @sr-focus="onFocus"
           />
-          <!-- <div class="menu-list" v-for="(item, id) in scenario.results()" :key="id">
-                    <scenario-row
-                        :action="item"
-                        :cid="id"
-                    /> -->
         </div>
       </div>
     </div>
@@ -36,60 +31,51 @@ export default {
   components: { ScenarioRow, ScenarioTitle },
   data() {
     return {
-      selectedActionItem: null,
+      selectedRow: null,
       scenario: new Scenario(),
     };
   },
   created() {
-    this.addActionItem();
+    this.addRow();
   },
   methods: {
-    onAddAction() {
-      this.addActionItem();
+    onAdd() {
+      this.addRow();
       this.$forceUpdate();
     },
-    onRemoveAction() {
-      if (
-        !this.selectedActionItem
-                || !this.scenario.anyAction()
-                || this.selectedActionItem === this.scenario.firstAction()
-      ) return;
+    onRemove() {
+      if (!this.selectedRow
+          || !this.scenario.any()
+          || this.selectedRow === this.scenario.first()) {
+        return;
+      }
 
-      const id = this.selectedActionItem.getId();
-      this.scenario.removeAction(id);
-      this.selectedActionItem = null;
+      const id = this.selectedRow.getId();
+      this.scenario.remove(id);
+      this.selectedRow = null;
 
-      if (this.scenario.anyAction()) {
-        this.scenario.firstAction().setPronoun('When');
+      if (this.scenario.any()) {
+        this.scenario.first().setPronoun('When');
       }
 
       this.$forceUpdate();
     },
     onFocus(id) {
-      if (!this.scenario.hasAction(id)) return;
+      if (!this.scenario.has(id)) return;
 
-      this.selectedActionItem = this.scenario.action(id);
+      this.selectedRow = this.scenario.get(id);
     },
-    addActionItem() {
+    addRow() {
       const id = Date.now().toString();
-      const number = this.scenario.countActions() + 1;
+      const number = this.scenario.size() + 1;
 
       const action = new Action();
       action.setId(id);
       action.setNumber(number);
       action.setPronoun(action.number > 1 ? 'And' : 'When');
 
-      this.scenario.addAction(id, action);
+      this.scenario.add(id, action);
       this.$forceUpdate();
-    },
-    onAddResult() {
-
-    },
-    onRemoveResult() {
-
-    },
-    onFocusResult() {
-
     },
   },
 };
