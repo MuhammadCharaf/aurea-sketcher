@@ -1,13 +1,12 @@
-import VueRouter from "vue-router"
-
-function view(path, view) {
-    return { path, component: require(`./views/${view}.vue`).default }
-}
+import VueRouter from 'vue-router';
+import Test from './pages/Test.vue';
+import ScenarioPage from './pages/ScenarioPage.vue';
 
 const routes = [
-    view('/foo', 'Test')
-]
+  { path: '/scenario', component: ScenarioPage },
+  { path: '/foo', component: Test },
+];
 
 export default new VueRouter({
-    routes
-})
+  routes,
+});
