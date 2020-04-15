@@ -2,9 +2,6 @@
  * Represents Scenario Action data model.
  */
 class ScenarioInstruction {
-  /**
-     * Constructor
-     */
   constructor() {
     this.id = '';
     this.number = 0;

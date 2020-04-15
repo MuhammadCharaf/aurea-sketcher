@@ -26,14 +26,14 @@ import ScenarioRow from '../components/ScenarioRow.vue';
 import ScenarioTitle from '../components/ScenarioTitle.vue';
 
 import ScenarioInstruction from '../data/scenarioInstruction';
-import Scenario from '../data/scenario';
+import Sequence from '../data/sequence';
 
 export default {
   components: { ScenarioRow, ScenarioTitle },
   data() {
     return {
       selectedRow: null,
-      scenario: new Scenario(),
+      scenario: new Sequence(),
     };
   },
   created() {

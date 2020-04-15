@@ -20,9 +20,9 @@
 
 
 <script>
-import Scenario from '../data/scenario';
+import Sequence from '../data/sequence';
 
 export default {
-  props: { scenario: Scenario },
+  props: { scenario: Sequence },
 };
 </script>

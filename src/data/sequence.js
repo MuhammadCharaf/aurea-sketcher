@@ -1,7 +1,7 @@
 /**
- * Represents scenario component
+ * Represents sequence of steps
  */
-class Scenario {
+class Sequence {
   constructor() {
     this.title = '';
     this.rowsMap = new Map();
@@ -48,4 +48,4 @@ class Scenario {
   }
 }
 
-export default Scenario;
+export default Sequence;
