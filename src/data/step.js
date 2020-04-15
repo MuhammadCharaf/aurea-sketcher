@@ -1,7 +1,7 @@
 /**
- * Represents Scenario Action data model.
+ * Represents Step
  */
-class ScenarioInstruction {
+class Step {
   constructor() {
     this.id = '';
     this.number = 0;
@@ -42,4 +42,4 @@ class ScenarioInstruction {
   }
 }
 
-export default ScenarioInstruction;
+export default Step;

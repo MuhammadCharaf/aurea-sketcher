@@ -25,7 +25,7 @@
 import ScenarioRow from '../components/ScenarioRow.vue';
 import ScenarioTitle from '../components/ScenarioTitle.vue';
 
-import ScenarioInstruction from '../data/scenarioInstruction';
+import Step from '../data/step';
 import Sequence from '../data/sequence';
 
 export default {
@@ -70,7 +70,7 @@ export default {
       const id = Date.now().toString();
       const number = this.scenario.size() + 1;
 
-      const action = new ScenarioInstruction();
+      const action = new Step();
       action.setId(id);
       action.setNumber(number);
       action.setPronoun(action.number > 1 ? 'And' : 'When');

@@ -47,12 +47,12 @@
 </template>
 
 <script>
-import ScenarioInstruction from '../data/scenarioInstruction';
+import Step from '../data/step';
 
 export default {
   props: {
     uniqueId: { type: String, default: '' },
-    viewModel: ScenarioInstruction,
+    viewModel: Step,
   },
   data() {
     return {
